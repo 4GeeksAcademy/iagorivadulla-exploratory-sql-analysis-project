@@ -20,33 +20,28 @@ SELECT * FROM species;
 SELECT * FROM climate;
 SELECT * FROM observations;
 
+SELECT * FROM observations LIMIT 10;
+SELECT DISTINCT region_id FROM observations;
+SELECT COUNT(DISTINCT species_id) FROM observations;
+SELECT COUNT(*) FROM observations WHERE region_id == 2;
+SELECT COUNT(*) FROM observations WHERE observation_date == '1998-08-08';
 
--- MISSION 1
--- Your query here;
+SELECT region_id, COUNT(*) AS num FROM observations GROUP BY region_id ORDER BY num DESC LIMIT 1;
+SELECT species_id, COUNT(*) AS count FROM observations GROUP BY species_id ORDER BY count DESC LIMIT 5;
+SELECT species_id, COUNT(*) AS few FROM observations GROUP BY species_id HAVING few < 5 ORDER BY few ASC;
+SELECT observer, COUNT(*) AS obs FROM observations GROUP BY observer ORDER BY obs DESC LIMIT 1;
 
--- MISSION 2
--- Your query here;
+SELECT regions.name FROM observations JOIN regions ON observations.region_id == regions.id;
+SELECT species.scientific_name FROM species JOIN observations ON species.id == observations.species_id;
 
+SELECT regions.name AS region, species.scientific_name, COUNT(*) AS specie 
+FROM observations JOIN species ON observations.species_id == species.id 
+JOIN regions ON observations.region_id = regions.id 
+GROUP BY region, species.scientific_name ORDER BY specie DESC;
 
--- MISSION 3
--- Your query here;
+INSERT INTO observations VALUES(501, 888, 6, 'obsr231421412', '2025-09-27', -21.1323, 130.2345, 1 );
 
+--SELECT scientific_name FROM species WHERE scientific_name ;
+--No se como buscar en la base de datos que nombre cientifico esta mal escrito
 
--- MISSION 4
--- Your query here;
-
-
--- MISSION 5
--- Your query here;
-
-
--- MISSION 6
--- Your query here;
-
-
--- MISSION 7
--- Your query here;
-
-
--- MISSION 8
--- Your query here;
+DELETE FROM observations WHERE id == 501;
