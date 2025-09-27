@@ -31,13 +31,26 @@ SELECT species_id, COUNT(*) AS count FROM observations GROUP BY species_id ORDER
 SELECT species_id, COUNT(*) AS few FROM observations GROUP BY species_id HAVING few < 5 ORDER BY few ASC;
 SELECT observer, COUNT(*) AS obs FROM observations GROUP BY observer ORDER BY obs DESC LIMIT 1;
 
-SELECT regions.name FROM observations JOIN regions ON observations.region_id == regions.id;
-SELECT species.scientific_name FROM species JOIN observations ON species.id == observations.species_id;
+SELECT name FROM regions JOIN observations ON observations.region_id == regions.id;
+SELECT scientific_name FROM species JOIN observations ON species.id == observations.species_id;
 
 SELECT regions.name AS region, species.scientific_name, COUNT(*) AS specie 
 FROM observations JOIN species ON observations.species_id == species.id 
 JOIN regions ON observations.region_id = regions.id 
-GROUP BY region, species.scientific_name ORDER BY specie DESC;
+GROUP BY region, species.scientific_name 
+HAVING COUNT(*) = (
+    SELECT MAX(cnt)
+    FROM(
+        SELECT COUNT(*) AS cnt
+        FROM observations
+        WHERE observations.region_id = regions.id
+        GROUP BY observations.species_id
+    )
+)
+ORDER BY region;
+
+
+
 
 INSERT INTO observations VALUES(501, 888, 6, 'obsr231421412', '2025-09-27', -21.1323, 130.2345, 1 );
 
