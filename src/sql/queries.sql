@@ -10,9 +10,9 @@ SELECT DISTINCT region_id FROM observations;
 --How many distinct species;
 SELECT COUNT(DISTINCT species_id) FROM observations;
 --Observations in region id 2;
-SELECT COUNT(*) FROM observations WHERE region_id == 2;
+SELECT COUNT(*) FROM observations WHERE region_id == 2 AND count > 0;
 --How many observations in 1198;
-SELECT COUNT(*) FROM observations WHERE observation_date == '1998-08-08';
+SELECT COUNT(*) FROM observations WHERE observation_date == '1998-08-08' AND count > 0;
 
 
 --Region id with most observations;
@@ -52,6 +52,7 @@ INSERT INTO observations VALUES(501, 888, 6, 'obsr231421412', '2025-09-27', -21.
 
 --SELECT scientific_name FROM species WHERE scientific_name ;
 --No se como buscar en la base de datos que nombre cientifico esta mal escrito;
+
 
 --Delete the test observation;
 DELETE FROM observations WHERE id == 501;
